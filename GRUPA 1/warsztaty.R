@@ -226,10 +226,8 @@ plot + facet_grid(manufacturer ~ cyl, switch = "both")
 #dodanie całościowych wykresów 
 plot + facet_grid(manufacturer ~ cyl, margins = c("manufacturer", "cyl"))
 
-#zadanie - dla każdego lotniska wykresy skrzypcowowe odległości lotu w każdym z pierwszych sześciu miesięcy roku
-ggplot(flights[flights$month<7,], aes(x = as.factor(month), y = distance)) +
-  geom_violin() +
-  facet_wrap(~origin)
+# @TODO 2 
+#dla każdego lotniska wykresy skrzypcowowe odległości lotu w każdym z pierwszych sześciu miesięcy roku
 
 
 #---------------------------------------------------TEKST NA WYKRESIE---------------------------------------------------------
@@ -348,7 +346,7 @@ ggplot(planes[planes$year <1980,],aes(x = year, y = type, color = engine)) + #ma
   scale_discrete_manual(aes = "color",                                                   #wybieramy co chcemy nadpisać, w naszym przypadku mamy color
                         values = c("yellow", "red", "green", "blue", "orange", "brown")) #tutaj nadpisujemy ich wartości i ustawiamy własne kolory
 
-#@ToDo
+# @TODO 3
 
 ggplot(planes[planes$year >= 1995,], aes(year, fill = engine)) +
   geom_bar()
@@ -360,17 +358,6 @@ ggplot(planes[planes$year >= 1995,], aes(year, fill = engine)) +
 #usuń linie na wykresie (minor i major), ale tylko dla osi x, poszukaj tego w ?theme()
 #wytłuszcz tytuł legendy (nadaj mu face = "bold w odpowiednim miejscu)
 #zmień kolory w legendzie na "pink", "orange", "navy", "green" (w funkcji scale_fill_manual)
-
-#odp
-ggplot(planes[planes$year >= 1995,], aes(year, fill = engine)) +
-  geom_bar() +
-  ggtitle("Samoloty i ich silniki od 1995") +
-  labs(x = "Rok", y = "Liczba samolotów", fill = "Typ silnika") +
-  theme_bw() +
-  theme(panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        legend.title = element_text(face = "bold")) +
-  scale_fill_manual(values = c("pink", "orange", "navy", "green"))
 
 
 
