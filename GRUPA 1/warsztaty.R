@@ -141,10 +141,9 @@ ggplot(smallerFlights, aes(factor(origin), air_time, color = factor(origin))) +
   geom_point(position = "jitter" , 
              alpha = 0.3)
 
-# geometrie można łączyć
+# geometrie można łączyć dodając + 
 ggplot(smallerFlights, aes(factor(origin), air_time, fill = factor(origin))) + 
-  geom_point(position = "jitter", 
-             alpha = 0.3) + 
+  geom_point(position = "jitter", alpha = 0.3) + 
   geom_boxplot(outlier.colour = "red")
 
 # Jak zobaczyć rozkłady zmiennych - wykresy skrzypcowe 
@@ -161,9 +160,10 @@ ggplot(smallerFlights, aes(factor(origin), air_time, fill = factor(origin))) +
 airports
 
 # @TODO 1
-# 1. Za pomocą zbioru "airports" narysuj mapę Ameryki północnej (bez Hawajów i Alaski - sam ląd) 
-# 2. Uwzględnij ukształtownie terenu 
-# 3. Następnie na tej samej mapy wyróżnij kolorem strefy czasowe
+# 1. Za pomocą zbioru "airports" narysuj mapę Ameryki północnej (bez Hawajów i Alaski - sam ląd)
+# podpowiedź: rozważ skale obie skale continious i narysuj wykres punktowy, oraz odpowiednio ogranicz
+# 2. Uwzględnij ukształtownie terenu (podpowiedź: alt - wysokość nad poziomem morza, użyj kolorów )
+# 3. Następnie na tej samej mapie wyróżnij kolorem strefy czasowe
 
 
 #---------------------------------------------- wykres Continious ~ Continious------------------------------------ 
