@@ -317,8 +317,7 @@ ggplot(flights[flights$month ==6,], aes(y = arr_delay, x = dep_delay, color = or
   geom_point()
 
 #nie ma legendy - zaznaczamy że jej nie chcemy
-flights %>% filter(month == 6) %>% 
-  ggplot(aes(y = arr_delay, x = dep_delay, color = origin)) +
+  ggplot(flights[flights$month == 6,], aes(y = arr_delay, x = dep_delay, color = origin)) +
   geom_point(show.legend = FALSE)    #w ten sposób nie pokazujemy legendy dl adanej geometrii
 #przydatne gdy nanosimy dwie lub więcej geometrii i chcemy jakąś legendę ukryć
 
