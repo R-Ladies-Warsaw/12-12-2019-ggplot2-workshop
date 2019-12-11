@@ -43,7 +43,65 @@ library(dplyr)
 ```
 <br /> <br /> 
 
-## Oceny filmów * 
+## 1. Punktowy wykres zależności współczynników wraz z wyróżnionymi krajami *
+
+### Opis 
+Celem poniższego zadania jest sprawdzanie swoich umiejętności w użyciu funkcji geom_point() z różnymi wartościami zaznaczonymi na osiach x i y. Ponadto, zaznaczyć należy państwa o najwyższym oraz najniższym współczynniku urodzeń na świecie.
+<center>
+![](img/zadanie1.png)
+</center>
+```{r echo=TRUE,eval=FALSE}
+#install.packages("SmarterPoland")
+library(ggplot2)
+library(SmarterPoland)
+
+```
+<br /> <br /> 
+
+## 2. Gęstości współczynników zgonów na różnych kontynentach **
+
+### Opis 
+Zadaniem jest przygotowanie porównania gęstości współczynnika zgonów na kontynentach za pomocą 5 figur, wyświetlonych na różnych panelach. Należy zwrócić uwagę na różne kolory wykresów, przerywaną linię oraz podpisy.
+
+<center>
+![](img/zadanie2.png)
+</center>
+
+<br /> <br /> 
+
+## 3. Populacje *
+
+### Opis
+W zadaniu należy wykonać wizualizację rozkładu populacji wśród państw na różnych kontynentach, zarówno za pomocą wykresu skrzynkowego jak i punktowego. Zwróć uwagę na miarę zastosowaną w wyświetleniu skali y
+
+<center>
+![](img/zadanie3.png)
+</center>
+
+<br /> <br /> 
+
+## 4. Złożony wykres kolumnowy **
+
+### Opis
+Ta wizualizacja zostanie przedstawiona na zbiorze danych iris, a jej celem jest prezentacja różnych średnich wartości dla poszczególnych gatunków. 
+
+
+
+<center>
+![](img/zadanie4.png)
+</center>
+
+<br /> <br /> 
+
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(reshape2)
+iris2 <- melt(iris, id.vars="Species")
+
+```
+
+## 5. Oceny filmów * 
+
 ### Opis 
 Celem jest przedstawienie ilości filmów, w różnych przedziałach oceny z serwisu IMDB.
 (Sama wielkość przedziałów jest dowolna, nie trzeba jej określać by rozwiązać zadanie).
@@ -59,7 +117,8 @@ movies <- read.csv("data/movie_metadata.csv")
 ```
 <br /> <br /> 
 
-## Budżety filmowe * 
+## 6. Budżety filmowe * 
+
 ### Opis 
 Wizualizacja lini trendu budżetów w filmach na przestrzeni lat<br />
 a) wszystkich filmów IMDb<br />
@@ -79,7 +138,8 @@ movies500 <- head(movies, 500)
 ```
 <br /> <br /> 
 
-## Aktorzy ** 
+## 7. Aktorzy ** 
+
 ### Opis 
 Celem w tym zadaniu jest odtworzenie wykresu poniżej z jak największą ilością detali. 
 Dla ułatwienia w zadaniu zostały podane dwie funkcje, którch wykożystanie jest praktycznie niezbędne.
@@ -108,7 +168,8 @@ head(movies_actors)
 ```
 <br /> <br /> 
 
-## Czy filmy są coraz gorsze? *** 
+## 8. Czy filmy są coraz gorsze? *** 
+
 ### Opis 
 Celem zadania jest dokładne odtworzenie wykresu z poniższego zdjęcia
 
