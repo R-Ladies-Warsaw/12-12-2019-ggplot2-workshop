@@ -1,0 +1,133 @@
+---
+date: "12 12 2019"
+output: html_document
+---
+
+<center> <h1>Zbiór zadań z ggplot</h1> </center>
+<center> <h3>zadania pochodzą z warsztatów <br /> organizowanych 12 grudnia 2019</h3> </center>
+
+
+# Opis
+Poniżej zamieszczona jest lista zadań, która była opracowywana w różnych grupach na warszatach ggplot 12 grudnia 2019r. https://www.facebook.com/events/2336582616605870/
+
+### Trudność zadań
+
+Trudnosci zadań opsane są gwiazdkami przy ich tytułach i odpowiadają one szacowanym czasom, które początkujący uczestnik powinien na nie poświęcić, gdzie:
+<br />
+* - do 10 min<br />
+**  - do 20 min<br />
+*** - powyżej 30 min<br />
+
+
+<center>
+<h1>Zadania</h1> 
+</center>
+
+
+### Wzorzec
+
+## TYTUŁ Trudność * / ** / *** 
+### Opis 
+{krótki opis, o co trzeba zrobić w zadaniu}
+
+<center>
+![](img/g3_styl_2.png)
+</center>
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(dplyr)
+
+
+#wczytanie odpowiednich danych itd
+
+```
+<br /> <br /> 
+
+## Oceny filmów * 
+### Opis 
+Celem jest przedstawienie ilości filmów, w różnych przedziałach oceny z serwisu IMDB.
+(Sama wielkość przedziałów jest dowolna, nie trzeba jej określać by rozwiązać zadanie).
+Zadanie wymaga użycia jedynie podstawowych funkcji i geometrii ggplot2
+
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(dplyr)
+
+movies <- read.csv("data/movie_metadata.csv")
+
+
+```
+<br /> <br /> 
+
+## Budżety filmowe * 
+### Opis 
+Wizualizacja lini trendu budżetów w filmach na przestrzeni lat<br />
+a) wszystkich filmów IMDb<br />
+b) TOP 500 filmów IMDb, czy z tą wizualizacją jest wszystko w porządku? <br />
+
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(dplyr)
+
+movies <- read.csv("data/movie_metadata.csv")
+
+movies500 <- arrange(movies, desc(num_voted_users))
+movies500 <- head(movies, 500)
+
+
+
+```
+<br /> <br /> 
+
+## Aktorzy ** 
+### Opis 
+Celem w tym zadaniu jest odtworzenie wykresu poniżej z jak największą ilością detali. 
+Dla ułatwienia w zadaniu zostały podane dwie funkcje, którch wykożystanie jest praktycznie niezbędne.
+
+<center>
+![](img/g3_styl_2.png)
+</center>
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(dplyr)
+
+movies <- read.csv("data/movie_metadata.csv")
+
+movies_actors <- movies%>%
+  group_by(aktor=actor_1_name)%>%
+  summarise(ilosc=n())%>%
+  arrange(desc(ilosc))%>%
+  head(6)
+
+head(movies_actors)
+
+
+# 2 nowe rzeczy, których użycie będzie konieczne
+?geom_col
+?coord_flip
+```
+<br /> <br /> 
+
+## Czy filmy są coraz gorsze? *** 
+### Opis 
+Celem zadania jest dokładne odtworzenie wykresu z poniższego zdjęcia
+
+<center>
+![](img/g3_styl_1.png)
+</center>
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(dplyr)
+
+
+movies <- read.csv("data/movie_metadata.csv")
+
+movies_year <- movies%>%
+  group_by(title_year)%>%
+  summarise(score=mean(imdb_score))
+
+
+
+```
+<br /> <br /> 
+
