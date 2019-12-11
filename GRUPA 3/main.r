@@ -114,7 +114,6 @@ ggplot(data = movies, aes(x = title_year, y = imdb_score)) +
   geom_point(alpha = 0.3) +
   geom_smooth()
 
-# Można także zrobić z niej prostą linię
 ggplot(data = movies, aes(x = title_year, y = imdb_score)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm")
@@ -163,13 +162,11 @@ ggplot(data = moviesDecades, aes(x = decade, y = imdb_score)) +
   geom_text(aes(label = outlier), size = 3.5, hjust = 1, vjust = -0.5) +
   geom_point(data = moviesDecades[!is.na(moviesDecades$outlier),], color = "blue")
 
-
+?geom_violin
+ggplot(data = moviesDecades, aes(x = decade, y = imdb_score)) +
+  geom_violin()
 
 ### 4. Stylizacja
-
-
-
-
 # Przykład 1 - Zróbmy go razem!
 
 # najpierw dane. obliczmy średnią ocene filmów z każdego roku
