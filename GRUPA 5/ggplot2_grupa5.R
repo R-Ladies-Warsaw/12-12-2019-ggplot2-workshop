@@ -67,6 +67,8 @@ ggplot(data = countries, aes(x = birth.rate, y = death.rate)) +
   ggtitle("Title of plot")
 
 ## wykres punktowy dla zmiennej typu character (plot for variable which has character type)
+str(countries)
+
 ggplot(data = countries, aes(x = continent, y = death.rate)) +
   geom_point()
 
@@ -74,6 +76,19 @@ ggplot(data = countries, aes(x = continent, y = death.rate)) +
 ggplot(data = countries, aes(x = continent, y = death.rate)) +
   geom_point(position = "jitter", alpha = 0.2) +
   labs(title = "Title of plot", x = "Continent", y = "Death rate") 
+
+## lub (or)
+ggplot(data = countries, aes(x = continent, y = death.rate)) +
+  geom_jitter(alpha = 0.2) +
+  labs(title = "Title of plot", x = "Continent", y = "Death rate") 
+
+## kontrolujemy parametry losowego rozmieszczenia punktow default width = 40% 
+## If omitted, defaults to 40% of the resolution of the data: this means the jitter values will occupy 80% of the implied bins. Categorical data is aligned on the integers, so a width or height of 0.5 will spread the data so it's not possible to see the distinction between the categories.
+
+ggplot(data = countries, aes(x = continent, y = death.rate)) +
+  geom_jitter(alpha = 0.2, width =0.2) +
+  labs(title = "Title of plot", x = "Continent", y = "Death rate") 
+
 
 ## narysujmy wykresy pudełkowe (ploting boxplot)
 ggplot(data = countries, aes(x = continent, y = death.rate)) +
@@ -83,7 +98,13 @@ ggplot(data = countries, aes(x = continent, y = death.rate)) +
 ggplot(data = countries, aes(x = continent, y = death.rate)) +
   geom_boxplot(outlier.color = "red")
 
+
+
+
 ## dodajemy atrybut kolor (adding attriubute color)
+ggplot(data = countries, aes(x = birth.rate, y = death.rate)) +
+  geom_point()
+
 ggplot(data = countries, aes(x = birth.rate, y = death.rate, color = continent)) +
   geom_point()
 
@@ -94,6 +115,11 @@ ggplot(data = countries, aes(x = continent)) +
 ## wykres gęstości zmiennej (density plot for variable)
 ggplot(data = countries, aes(x = death.rate)) +
   geom_density()
+
+## wykres histogram 
+ggplot(data = countries, aes(x = death.rate)) +
+  geom_histogram(bins = 20)
+
 
 ## łączenie wykresów (combine plots)
 p1 <- ggplot(data = countries, aes(x = death.rate, fill = continent)) +
@@ -201,6 +227,8 @@ ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
   labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
   theme_bw()
 
+
+
 ## lub (or)
 maturaExam %>% 
   group_by(punkty, przedmiot, rok) %>%
@@ -211,6 +239,14 @@ maturaExam %>%
   theme_bw()
 
 
+# maturaExam %>% 
+#   group_by(punkty, przedmiot, rok) %>%
+#   summarise(n = sum(punkty)) %>%
+#   ggplot(aes(x = przedmiot, y = n, fill = rok)) +
+#   geom_bar(stat = "identity", position = 'dodge') +
+#   labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
+#   theme_bw()
+
 ## facet_wrap
 ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
   geom_bar(stat = "identity") +
@@ -218,11 +254,6 @@ ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
   theme_bw() +
   facet_wrap(~rok)
 
-ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
-  geom_bar(stat = "identity") +
-  labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
-  theme_bw() +
-  facet_wrap(~przedmiot)
 
 ## facet_grid
 
@@ -231,6 +262,12 @@ ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
   labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
   theme_bw() +
   facet_grid(rok~przedmiot)
+
+# ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
+#   geom_bar(stat = "identity") +
+#   labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
+#   theme_bw() +
+#   facet_wrap(rok~przedmiot)
 
 # 2 d) smooth
 
@@ -252,6 +289,12 @@ ggplot(countries, aes(x = birth.rate, y = death.rate, color = continent)) +
   geom_point() +  
   theme_bw() + 
   geom_smooth(se = FALSE) 
+
+ggplot(countries, aes(x = birth.rate, y = death.rate, color = continent)) +
+  geom_point() +  
+  theme_bw() + 
+  geom_smooth(se = FALSE)+
+  stat_smooth(aes(group = 1),method = "lm", se = F)
 
 # 2 e) coord
 
