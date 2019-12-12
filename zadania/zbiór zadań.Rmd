@@ -24,24 +24,6 @@ Trudnosci zadań opsane są gwiazdkami przy ich tytułach i odpowiadają one sza
 </center>
 
 
-### Wzorzec
-
-## TYTUŁ Trudność * / ** / *** 
-### Opis 
-{krótki opis, o co trzeba zrobić w zadaniu}
-
-<center>
-![](img/g3_styl_2.png)
-</center>
-```{r echo=TRUE,eval=FALSE}
-library(ggplot2)
-library(dplyr)
-
-
-#wczytanie odpowiednich danych itd
-
-```
-<br /> <br /> 
 
 ## 1. Punktowy wykres zależności współczynników wraz z wyróżnionymi krajami *
 
