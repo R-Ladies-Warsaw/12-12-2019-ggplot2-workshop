@@ -294,7 +294,7 @@ ggplot(countries, aes(x = birth.rate, y = death.rate, color = continent)) +
   geom_point() +  
   theme_bw() + 
   geom_smooth(se = FALSE)+
-  stat_smooth(aes(group = 1),method = "lm", se = F)
+  stat_smooth(aes(group = 1),method = "lm", se = FALSE)
 
 # 2 e) coord
 
