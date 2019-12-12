@@ -312,9 +312,9 @@ p + coord_polar()
 ### ZADANIE KOŃCOWE ###
 
 #Wybierz dowolny wykres z katalogu https://github.com/R-Ladies-Warsaw/12-12-2019-ggplot2-workshop/tree/master/GRUPA%205/wykresy
-#and draw it in ggplot2. Data for individual charts can be found in the data catalog.
+#i narysuj go w ggplot2. Dane do poszczególnych wykresów znajdziesz w katalogu data.
 #Podziel się z nami swoją grafiką (link w README, tutaj: https://github.com/R-Ladies-Warsaw/12-12-2019-ggplot2-workshop)
 
 #Select any chart from the catalog  https://github.com/R-Ladies-Warsaw/12-12-2019-ggplot2-workshop/tree/master/GRUPA%205/wykresy
-#i narysuj go w ggplot2. Dane do poszczególnych wykresów znajdziesz w katalogu data.
+#and draw it in ggplot2. Data for individual charts can be found in the data catalog.
 #Share your graphics with us (link in README, here: https://github.com/R-Ladies-Warsaw/12-12-2019-ggplot2-workshop)
