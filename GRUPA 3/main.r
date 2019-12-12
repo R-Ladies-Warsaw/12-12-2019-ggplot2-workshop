@@ -18,24 +18,24 @@ library(dplyr)
 ?read.csv
 movies <- read.csv("movie_metadata.csv",
                    stringsAsFactors = FALSE)
-
+movies
 head(movies, 10)
 colnames(movies)
 
-movies <- select(movies, movie_title, director_name, actor_1_name, num_voted_users, budget,
-                 plot_keywords, country, title_year, imdb_score)
-movies
+movies <- select(movies, movie_title, director_name, actor_1_name, num_voted_users,
+                 budget, plot_keywords, country, title_year, imdb_score)
+head(movies, 10)
 
-movies500 <- arrange(movies, desc(num_voted_users))
-movies500 <- head(movies, 500)
-movies500
+movies500 <- arrange(movies, desc(num_voted_users)) %>%
+  head(500)
+head(movies500, 10)
 
 moviesDecades <- movies
 moviesDecades$title_year <- moviesDecades$title_year %/% 10
 moviesDecades$title_year <- moviesDecades$title_year * 10
 moviesDecades$title_year <- paste0(moviesDecades$title_year, "s")
 moviesDecades <- rename(moviesDecades, decade = title_year)
-moviesDecades
+head(moviesDecades, 10)
 
 
 ### 3. Wizualizacje i piękno ggplota
@@ -53,10 +53,7 @@ ggplot(data = movies, aes(x = title_year)) +
   geom_bar()
 
 ggplot(data = movies, aes(x = title_year)) +
-  geom_bar()
-
-ggplot(data = movies, aes(x = title_year)) +
-  geom_bar(fill = "green")
+  geom_bar(fill = "pink")
 
 ?geom_density
 ggplot(data = movies, aes(x = title_year)) +
@@ -70,17 +67,20 @@ ggplot(data = movies500, aes(x = title_year)) +
   geom_dotplot()
 
 ggplot(data = movies500, aes(x = title_year)) +
-  geom_dotplot(binwidth = 1)
+  geom_dotplot(binwidth = 1.8)
 
 ggplot(data = movies500, aes(x = title_year)) +
   geom_bar() +
-  geom_dotplot(binwidth = 1)
+  geom_dotplot(binwidth = 1.8)
 
 
 ## Problem II - starsze znaczy lepsze?
 
 
 ggplot(data = moviesDecades, aes(x = decade, y = imdb_score))
+
+ggplot(data = moviesDecades, aes(x = decade, y = imdb_score)) +
+  geom_density()
 
 ?geom_point
 ggplot(data = moviesDecades, aes(x = decade, y = imdb_score)) +
@@ -91,6 +91,9 @@ ggplot(data = moviesDecades, aes(x = decade, y = imdb_score)) +
   geom_point()
 
 ggplot(data = moviesDecades, aes(x = decade, y = imdb_score, color = country)) +
+  geom_point()
+
+ggplot(data = movies500, aes(x = title_year, y = imdb_score, color = country)) +
   geom_point()
 
 ggplot(data = movies500, aes(x = title_year, y = imdb_score, color = country)) +
@@ -166,6 +169,7 @@ ggplot(data = moviesDecades, aes(x = decade, y = imdb_score)) +
 ggplot(data = moviesDecades, aes(x = decade, y = imdb_score)) +
   geom_violin()
 
+
 ### 4. Stylizacja
 # Przykład 1 - Zróbmy go razem!
 
@@ -196,7 +200,7 @@ ggplot(data=movies_year,aes(x=title_year,y=score))+
     plot.caption = element_text(color="grey",face="italic"),
     plot.margin = unit(c(1,1,1,1),"cm"),
     
-    aspect.ratio = 0.6,
+    aspect.ratio = 0.6
   )
 
 # stwórzmy go jeszcze raz krok po kroku!
