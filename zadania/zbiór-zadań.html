@@ -531,6 +531,47 @@ movies_year &lt;- movies%&gt;%
 <p><br /> <br /></p>
 </div>
 </div>
+<div id="opis-10" class="section level2">
+<h2>Opis</h2>
+<p>W kolejnych 3 zadaniach będziemy korzystać z biblioteki nycflights13. Zwizualizujemy między innymi ukształtowanie terenu w USA,</p>
+</div>
+<div id="mapka-usa" class="section level2">
+<h2>9. “Mapka” USA **</h2>
+<ol style="list-style-type: decimal">
+<li>Za pomocą zbioru “airports” wczytanego z biblioteki nycflights13 narysuj mapę Ameryki północnej (bez Hawajów i Alaski - sam ląd) podpowiedź: rozważ skale obie skale continious i narysuj wykres punktowy, oraz odpowiednio ogranicz</li>
+<li>Uwzględnij ukształtownie terenu (podpowiedź: alt - wysokość nad poziomem morza, użyj kolorów )</li>
+<li>Następnie na tej samej mapie wyróżnij kolorem strefy czasowe</li>
+</ol>
+</center>
+<pre class="r"><code>library(ggplot2)
+library(nycflights13)
+
+flights</code></pre>
+<p><br /> <br /></p>
+</div>
+<div id="odległości-lotu-dla-każdego-lotniska-wykresy-skrzypcowowe-odległości-lotu-w-każdym-z-pierwszych-sześciu-miesięcy-roku" class="section level2">
+<h2>10. Odległości lotu *<br />
+Dla każdego lotniska wykresy skrzypcowowe odległości lotu w każdym z pierwszych sześciu miesięcy roku</h2>
+</center>
+<pre class="r"><code>library(ggplot2)
+library(nycflights13)
+
+airports</code></pre>
+<p><br /> <br /></p>
+</div>
+<div id="upiększanie-wykresu" class="section level2">
+<h2>11. Upiększanie wykresu *</h2>
+<p>Do danego wykresu (patrz niżej) nanieś: tytuł “Samoloty i ich silniki od 1995” podpisy osi i tytuł legendy (podpowiedź - są w tej samej funkcji) zmień kolor tła wykresu na biały używając theme_bw() usuń linie na wykresie (minor i major), ale tylko dla osi x, poszukaj tego w ?theme() wytłuszcz tytuł legendy (nadaj mu face = “bold w odpowiednim miejscu) zmień kolory w legendzie na”pink“,”orange“,”navy“,”green&quot; (w funkcji scale_fill_manual)</p>
+</center>
+<pre class="r"><code>library(ggplot2)
+library(nycflights13)
+
+planes
+
+ggplot(planes[planes$year &gt;= 1995,], aes(year, fill = engine)) +
+  geom_bar()</code></pre>
+<p><br /> <br /></p>
+</div>
 </div>
 
 
