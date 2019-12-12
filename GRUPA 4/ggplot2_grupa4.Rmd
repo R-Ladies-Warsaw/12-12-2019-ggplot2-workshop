@@ -1,0 +1,427 @@
+---
+title: "Warsztaty (Workshop) ggplot2 - SPOTKANIA ENTUZJASTÓW R"
+author: "Kasia Woźnica"
+date: 12.12.2019
+output: 
+   html_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r, include=TRUE, echo = FALSE, warning=FALSE, message=FALSE}
+library("ggplot2")
+library("SmarterPoland")
+library("dplyr")
+library("gridExtra")
+```
+
+# 0 Struktura używania ggplot2 
+```{r, eval=FALSE}
+ggplot(data(data.frame object), aes(x = ?, y = ?, color = ?, fill = ?, label = ?,
+                           shape = ?, size = ?)) +
+  geom_point(...) +
+  geom_bar(...) +
+  geom_line(...) +
+  geom_text(...) +
+  ...
+coord_flip(...) +
+  ...
+facet_grid(...) +
+  ...
+theme_(bw/minimal/gray/...) +
+  theme(axis.title = element_text(...),
+        axis.text = element_text(...),
+        legend.position = "top/bottom/...") +
+  labs(title = "...", x = "...", y = "...") +
+  ...
+scale_y_manual(values = ..., name = "...", label = ...) +
+  scale_y_discrete() +
+  scale_color_manual() +
+  ...
+```
+
+## ggplot2 cheatsheet [link](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+
+
+
+# 1  Przypomnienie podstaw ggplot2 
+
+```{r, include=TRUE, echo=TRUE}
+## dane 
+data(countries)
+```
+
+```{r, include=TRUE, echo=TRUE}
+## pierwsza warstwa 
+ggplot(data = countries)
+```
+
+```{r, include=TRUE, echo=TRUE}
+## dodanie osi 
+ggplot(data = countries, aes(x = birth.rate, y = death.rate))
+```
+
+```{r, include=TRUE, echo=TRUE}
+## wykres punktowy 
+ggplot(data = countries, aes(x = birth.rate, y = death.rate)) +
+  geom_point()
+```
+
+```{r, include=TRUE, echo=TRUE}
+## równoważna opcja generowania wykresu
+wykres <- ggplot(data = countries, aes(x = birth.rate, y = death.rate)) 
+wykres + geom_point()
+```
+
+```{r, include=TRUE, echo=TRUE}
+## dodanie opisu osi 
+ggplot(data = countries, aes(x = birth.rate, y = death.rate)) +
+  geom_point() + 
+  labs(title = "Title of plot", x = "Birth rate", y = "Death rate") 
+```
+
+```{r, include=TRUE, echo=TRUE}
+## lub 
+ggplot(data = countries, aes(x = birth.rate, y = death.rate)) +
+  geom_point() + 
+  xlab("Birth rate") + 
+  ylab("Death rate") + 
+  ggtitle("Title of plot")
+```
+
+```{r, include=TRUE, echo=TRUE}
+## wykres punktowy dla zmiennej typu character
+ggplot(data = countries, aes(x = continent, y = death.rate)) +
+  geom_point()
+```
+
+```{r, include=TRUE, echo=TRUE}
+## dodajmy losowe rozmieszenie punktów oraz przezroczystość 
+ggplot(data = countries, aes(x = continent, y = death.rate)) +
+  geom_point(position = "jitter", alpha = 0.2) +
+  labs(title = "Title of plot", x = "Continent", y = "Death rate") 
+```
+
+```{r}
+## lub 
+ggplot(data = countries, aes(x = continent, y = death.rate)) +
+  geom_jitter(alpha = 0.2) +
+  labs(title = "Title of plot", x = "Continent", y = "Death rate") 
+
+## kontrolujemy parametry losowego rozmieszczenia punktow default width = 40% 
+ggplot(data = countries, aes(x = continent, y = death.rate)) +
+  geom_jitter(alpha = 0.2, width =0.2) +
+  labs(title = "Title of plot", x = "Continent", y = "Death rate") 
+
+```
+
+
+```{r, include=TRUE, echo=TRUE}
+## narysujmy wykresy pudełkowe
+ggplot(data = countries, aes(x = continent, y = death.rate)) +
+  geom_boxplot()
+```
+
+```{r, include=TRUE, echo=TRUE}
+## zaznaczmy outliery inny kolorem 
+ggplot(data = countries, aes(x = continent, y = death.rate)) +
+  geom_boxplot(outlier.color = "red")
+```
+
+```{r, include=TRUE, echo=TRUE}
+## dodajemy atrybut kolor 
+ggplot(data = countries, aes(x = birth.rate, y = death.rate)) +
+  geom_point()
+
+ggplot(data = countries, aes(x = birth.rate, y = death.rate, color = continent)) +
+  geom_point()
+```
+
+```{r, include=TRUE, echo=TRUE}
+## wykres słupkowy 
+ggplot(data = countries, aes(x = continent)) +
+  geom_bar()
+```
+
+```{r, include=TRUE, echo=TRUE}
+## wykres gęstości zmiennej 
+ggplot(data = countries, aes(x = death.rate)) +
+  geom_density()
+```
+
+```{r}
+## wykres histogram 
+ggplot(data = countries, aes(x = death.rate)) +
+  geom_histogram(bins = 20)
+```
+
+
+```{r, include=TRUE, echo=TRUE}
+## łączenie wykresów 
+p1 <- ggplot(data = countries, aes(x = death.rate, fill = continent)) +
+  geom_density(alpha = 0.2)
+
+p1
+```
+
+```{r, include=TRUE, echo=TRUE}
+p2 <- ggplot(countries, aes(x = continent, y = death.rate)) +
+  geom_violin()
+
+p2
+```
+
+```{r, include=TRUE, echo=TRUE}
+grid.arrange(p1, p2, nrow = 1)
+```
+
+## Zadania (Tasks)
+
+### 1
+
+```{r, include=TRUE, echo=TRUE}
+data(maturaExam)
+head(maturaExam)
+```
+
+Narysuj boxplot, który pokazuje liczbę zdobytych punktów z matury w podziale na przedmiot.
+
+
+```{r, include=TRUE, echo=FALSE}
+wykres_1 <- ggplot(maturaExam, aes(x = przedmiot, y = punkty)) + 
+  geom_boxplot(outlier.color = "blue") +
+  xlab("Przedmiot") + 
+  ylab("Punkty") + 
+  ggtitle("Rozkład punktów w latach 2010 - 2015")
+wykres_1
+```
+
+### 2
+
+Narysuj rozkład gęstości liczby punktów z matury w roku 2012 w podziele na przedmioty.
+
+```{r, include=TRUE, echo=FALSE}
+wykres_2 <- maturaExam %>% filter(rok == 2012) %>%
+ggplot(aes(x = punkty, fill = przedmiot)) +  
+  geom_density(alpha = 0.2) +
+  xlab("Punkty") + 
+  ylab("Gęstość") + 
+  ggtitle("Rozkład liczby punktów w roku 2012")
+wykres_2
+```
+
+### 3
+
+Połącz powstałe w 1 oraz 2 wykresy jeden pod drugim.
+
+
+```{r, include=TRUE, echo=FALSE}
+grid.arrange(wykres_1, wykres_2, ncol = 1)
+```
+
+#2 ggplot2 (scale_..., text_..., facet_..., smooth, coord)
+
+## 2 a) scale_...
+```{r, include=TRUE, echo=TRUE}
+p <- ggplot(data = countries, aes(x = continent, fill = continent)) +
+  geom_bar()
+p
+```
+
+```{r, include=TRUE, echo=TRUE}
+## scale_x_discrete
+p + scale_x_discrete(position = "top")
+```
+
+```{r, include=TRUE, echo=TRUE}
+## scale_y_continuous
+p + scale_y_continuous(position = "right")
+```
+
+```{r, include=TRUE, echo=TRUE}
+## scale_x_discrete
+p + scale_x_discrete(limits = sort(unique(countries$continent), decreasing = TRUE))
+```
+
+```{r, include=TRUE, echo=TRUE}
+## scale_y_reverse
+p + scale_y_reverse()
+```
+
+```{r, include=TRUE, echo=TRUE}
+## scale_fill_manual
+p + scale_fill_manual(values = c("red", "navyblue", "orange", "pink", "green"))
+```
+
+
+
+## 2 b) text_...
+```{r, include=TRUE, echo=TRUE}
+continents <- group_by(countries, continent) %>% 
+  na.omit %>% 
+  summarise(death.rate = mean(death.rate),
+            birth.rate = mean(birth.rate, na.rm = TRUE),
+            population = mean(population),
+            n.countries = length(country))
+```
+
+```{r, include=TRUE, echo=TRUE}
+## dodawanie etykiet 
+ggplot(continents, aes(x = birth.rate, y = death.rate, size = population, label = continent)) +
+  geom_point() +
+  geom_text(vjust = -1)
+```
+
+```{r, include=TRUE, echo=TRUE}
+ggplot(continents, aes(x = birth.rate, y = death.rate, size = population, label = continent)) +
+  geom_point() +
+  geom_text(vjust = -1, size = 5)
+```
+
+```{r, include=TRUE, echo=TRUE}
+## ggrepel - rozszerzenie ggplot2, dodawanie etykiet 
+
+#install.packages("ggrepel")
+library("ggrepel")
+```
+
+```{r, include=TRUE, echo=TRUE}
+## wykres jak powyżej 
+ggplot(continents, aes(x = birth.rate, y = death.rate, size = population, label = continent)) +
+  geom_point() +
+  geom_text_repel(size = 5, force = 1)
+```
+
+```{r, include=TRUE, echo=TRUE}
+## lub 
+ggplot(continents, aes(x = birth.rate, y = death.rate, size = population, label = continent)) +
+  geom_point() +
+  geom_label_repel(size = 5, force = 1)
+```
+
+```{r, include=TRUE, echo=TRUE}
+## lub 
+ggplot(continents, aes(x = birth.rate, y = death.rate, size = population, 
+                       label = paste0(continent, "; ", n.countries, " countries"))) +
+  geom_point() +
+  geom_text_repel(size = 4, force = 1, color = "black") 
+```
+
+
+
+## 2 c) facet_...
+
+```{r, include=TRUE, echo=TRUE}
+## przykład 
+maturaExam_aggregate <- maturaExam %>% 
+  group_by(punkty, przedmiot, rok) %>%
+  summarise(n = n())
+ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
+  theme_bw()
+
+
+maturaExam %>%
+  group_by(punkty, przedmiot, rok) %>%
+  summarise(n = sum(punkty)) %>%
+  ggplot(aes(x = przedmiot, y = n, fill = rok)) +
+  geom_bar(stat = "identity", position = 'dodge') +
+  labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
+  theme_bw()
+```
+
+
+```{r, include=TRUE, echo=TRUE}
+## facet_wrap
+ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
+  theme_bw() +
+  facet_wrap(~rok)
+```
+
+
+
+```{r, include=TRUE, echo=TRUE}
+## facet_grid
+ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
+  theme_bw() +
+  facet_grid(rok~przedmiot)
+```
+
+
+```{r, include=TRUE, echo=TRUE}
+ggplot(maturaExam_aggregate, aes(x = punkty, y = n, fill = rok)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Punkty", y = "Liczba osób", fill = "Rok") +
+  theme_bw() +
+  facet_wrap(rok~przedmiot)
+```
+
+## 2 d) smooth
+
+```{r, include=TRUE, echo=TRUE}
+ggplot(countries, aes(x = birth.rate, y = death.rate)) +
+  geom_point() 
+```
+
+```{r, include=TRUE, echo=TRUE}
+## dodanie linii trendu 
+ggplot(countries, aes(x = birth.rate, y = death.rate)) +
+  geom_point() + 
+  geom_smooth() 
+```
+
+```{r, include=TRUE, echo=TRUE}
+ggplot(countries, aes(x = birth.rate, y = death.rate, color = continent)) +
+  geom_point() + 
+  geom_smooth() 
+```
+
+```{r, include=TRUE, echo=TRUE}
+## ustawienie se 
+ggplot(countries, aes(x = birth.rate, y = death.rate, color = continent)) +
+  geom_point() +  
+  theme_bw() + 
+  geom_smooth(se = FALSE) 
+```
+
+```{r, include=TRUE, echo=TRUE}
+ggplot(countries, aes(x = birth.rate, y = death.rate, color = continent)) +
+  geom_point() +  
+  theme_bw() + 
+  geom_smooth(se = FALSE)+
+  stat_smooth(aes(group = 1),method = "lm", se = FALSE)
+```
+
+
+
+## 2 e) coord
+```{r, include=TRUE, echo=TRUE}
+p <- ggplot(data = countries, aes(x = continent)) +
+  geom_bar()
+
+p
+```
+
+
+```{r, include=TRUE, echo=TRUE}
+p + coord_flip()
+```
+
+```{r, include=TRUE, echo=TRUE}
+p + coord_flip() + scale_y_reverse()
+```
+
+```{r, include=TRUE, echo=TRUE}
+p + coord_polar()
+```
+
+
+# ZADANIE KOŃCOWE (LAST TASK)
+
+Wybierz dowolny wykres z katalogu [link](https://github.com/R-Ladies-Warsaw/12-12-2019-ggplot2-workshop/tree/master/GRUPA%205/wykresy) i narysuj go w ggplot2. Dane do poszczególnych wykresów znajdziesz w katalogu data.
+Podziel się z nami swoją grafiką (link w [README](https://github.com/R-Ladies-Warsaw/12-12-2019-ggplot2-workshop))
