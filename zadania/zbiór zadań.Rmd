@@ -192,3 +192,67 @@ movies_year <- movies%>%
 ```
 <br /> <br /> 
 
+
+## Opis 
+
+W kolejnych 3 zadaniach będziemy korzystać z biblioteki nycflights13. Zwizualizujemy między innymi ukształtowanie terenu w USA, 
+
+## 9. "Mapka" USA ** 
+
+1. Za pomocą zbioru "airports" wczytanego z biblioteki nycflights13 narysuj mapę Ameryki północnej (bez Hawajów i Alaski - sam ląd)
+podpowiedź: rozważ skale obie skale continious i narysuj wykres punktowy, oraz odpowiednio ogranicz
+2. Uwzględnij ukształtownie terenu (podpowiedź: alt - wysokość nad poziomem morza, użyj kolorów )
+3. Następnie na tej samej mapie wyróżnij kolorem strefy czasowe
+
+
+</center>
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(nycflights13)
+
+flights
+
+```
+<br /> <br /> 
+
+## 10. Odległości lotu *   
+Dla każdego lotniska wykresy skrzypcowowe odległości lotu w każdym z pierwszych sześciu miesięcy roku
+
+</center>
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(nycflights13)
+
+airports
+
+
+```
+<br /> <br /> 
+
+
+## 11. Upiększanie wykresu *
+
+
+Do danego wykresu (patrz niżej) nanieś:
+tytuł "Samoloty i ich silniki od 1995"
+podpisy osi i tytuł legendy (podpowiedź - są w tej samej funkcji)
+zmień kolor tła wykresu na biały używając theme_bw()
+usuń linie na wykresie (minor i major), ale tylko dla osi x, poszukaj tego w ?theme()
+wytłuszcz tytuł legendy (nadaj mu face = "bold w odpowiednim miejscu)
+zmień kolory w legendzie na "pink", "orange", "navy", "green" (w funkcji scale_fill_manual)
+
+
+</center>
+```{r echo=TRUE,eval=FALSE}
+library(ggplot2)
+library(nycflights13)
+
+planes
+
+ggplot(planes[planes$year >= 1995,], aes(year, fill = engine)) +
+  geom_bar()
+
+```
+<br /> <br /> 
+
+
